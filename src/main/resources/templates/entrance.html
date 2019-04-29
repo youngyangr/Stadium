@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/entrance.css">
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/breakpoints.min.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/entrance.js"></script>
+</head>
+<body class="is-preload">
+<!-- Header -->
+<header id="header">
+    <div class="inner">
+        <a href="#" class="image avatar"><img src="img/icon.svg" alt="" /></a>
+        <h1><strong>Sports are everywhere</strong><br />
+            wonderful every day!<br />
+            Sports add color to life!</h1>
+    </div>
+</header>
+
+<div id="main">
+    <div class="login-wrap">
+    <div class="login-html">
+    <input id="tab-1" type="radio" name="tab" class="sign-in" th:checked="${activePage == 'signIn'}? 'true' : 'false'"><label for="tab-1" class="tab">Sign In</label>
+    <input id="tab-2" type="radio" name="tab" class="sign-up" th:checked="${activePage == 'signIn'}? 'false' : 'true'"><label for="tab-2" class="tab">Sign Up</label>
+        <div class="login-form">
+            <div class="sign-in-htm">
+                <form method="post" action="/signIn">
+                    <div class="group">
+                        <label class="label">Username</label>
+                        <input type="text" class="input" id="username" placeholder="Username" name="username"/>
+                    </div>
+                    <div class="group">
+                        <label class="label">Password</label>
+                        <input type="password" class="input" id="password" placeholder="Password" name="password"/>
+                    </div>
+                    <p></p>
+                    <div class="group">
+                        <button type="submit" class="button" value="Sign In" >Sign In</button>
+                    </div>
+                </form>
+            </div>
+            <div class="sign-up-htm" >
+                <form method="post" action="/signUp">
+                    <div id="tip"></div>
+                    <div class="group">
+                        <label class="label">Username</label>
+                        <input type="text" class="input" id="username1" placeholder="Username" name="username"/>
+                    </div>
+                    <div class="group">
+                        <label class="label">Password New</label>
+                        <input type="password" class="input" id="password1" placeholder="Password New" name="password"/>
+                    </div>
+                    <div class="group">
+                        <label class="label">Password Again</label>
+                        <input type="password" class="input" id="password2" placeholder="Password Again"/>
+                    </div>
+                    <p></p>
+                    <div class="group">
+                        <button type="submit" class="button" value="Sign Up" onclick="check_commit()">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    $('#tab-1').on("click", function () {
+        $('.sign-up-htm form input').each(function () {
+            $(this).val("")
+        })
+    });
+    $('#tab-2').on("click", function () {
+        $('.sign-in-htm form input').each(function () {
+            $(this).val("")
+        })
+    })
+</script>
+
+</body>
+</html>

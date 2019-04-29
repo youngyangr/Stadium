@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Basic PagerModel Needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assignment</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"  href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome/css/font-awesome.css" th:href="@{/fonts/font-awesome/css/font-awesome.css}">
+
+    <!-- EOF CSS INCLUDE -->
+    <style>
+        .pagination-centered {
+            text-align: center;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .pointer-disabled {
+            pointer-events: none;
+        }
+    </style>
+
+    <!-- Slider
+    ================================================== -->
+    <link href="../static/css/owl.carousel.css" rel="stylesheet" media="screen" th:href="@{/css/owl.carousel.css}">
+    <link href="../static/css/owl.theme.css" rel="stylesheet" media="screen" th:href="@{/css/owl.theme.css}">
+
+    <!-- Stylesheet
+    ================================================== -->
+    <link rel="stylesheet" type="text/css"  href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/responsive.css" th:href="@{/css/responsive.css}">
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<!-- Navigation
+==========================================-->
+<nav id="tf-menu" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>ee
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index">Gym Club</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/index" class="page-scroll">主页</a></li>
+                <li><a href="/home" class="page-scroll">个人中心</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- Home PagerModel
+==========================================-->
+<div id="tf-home" class="text-center">
+    <div class="overlay">
+        <div class="content">
+            <h1>Welcome to <strong><span class="color">Gym Club</span></strong></h1>
+            <p class="lead">运动如花绽放快乐<strong> 校园 </strong> 青春似火燃烧亮丽<strong> 人生 </strong></p>
+            <a href="" class="fa fa-angle-down page-scroll"></a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <!-- START PAGE SIDEBAR -->
+    <!-- commented out     <div th:replace="fragments/header :: header">&nbsp;</div> -->
+    <!-- END PAGE SIDEBAR -->
+    <!-- PAGE TITLE -->
+    <div class="page-title pager">
+        <p></p>
+        <h2>
+             Coach List
+        </h2>
+    </div>
+    <div class="pager">
+        <p></p>
+        <select class="input-group-sm form-control pagination">
+            <option value="My">My Coach</option>
+            <option value="All">All Coach</option>
+        </select>
+        <select class="input-group-sm form-control pagination">
+            <option value="all">all subject</option>
+            <option value="basketball">basketball</option>
+            <option value="football">football</option>
+            <option value="swim">swim</option>
+            <option value="wushu">wushu</option>
+        </select>
+        <input type="submit" value="view" class="btn btn-primary btn-condensed">
+    </div>
+
+    <!-- END PAGE TITLE -->
+    <div class="row">
+        <table class="table">
+            <select class="form-control position" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                        th:value="${pageSize}"
+                        th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="coachList : ${coachList}">
+                <td th:text="${coachList.name}">Text ...</td>
+                <td th:text="${coachList.subject}">Text ...</td>
+                <td><button type="button"
+                            class="btn btn-primary btn-condensed">
+                    reserved
+                </button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div th:if="${coachList.totalPages != 1}"
+                 class="form-group col-md-12 pagination-centered">
+                <ul class="pagination">
+                    <li th:class="${coachList.number == 0} ? disabled"><a
+                            class="pageLink"
+                            th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                    </li>
+                    <li th:class="${coachList.number == 0} ? disabled"><a
+                            class="pageLink"
+                            th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${coachList.number})}">&larr;</a>
+                    </li>
+                    <li
+                            th:class="${coachList.number == (page - 1)} ? 'active pointer-disabled'"
+                            th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                        <a class="pageLink"
+                           th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${page})}"
+                           th:text="${page}"></a>
+                    </li>
+                    <li
+                            th:class="${coachList.number + 1 == coachList.totalPages} ? disabled">
+                        <a class="pageLink"
+                           th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${coachList.number + 2})}">&rarr;</a>
+                    </li>
+                    <li
+                            th:class="${coachList.number + 1 == coachList.totalPages} ? disabled">
+                        <a class="pageLink"
+                           th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${coachList.totalPages})}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+    <!-- END PAGE CONTAINER -->
+</div>
+
+<nav id="footer">
+    <div class="container">
+        <div class="pull-left fnav">
+            <p>ALL RIGHTS RESERVED. COPYRIGHT © 2019 <a href="http://youngyangor.github.io" target="_blank">youngyang</a> -  More Information  <a href="http://youngyangor.github.io" target="_blank">HomePage</a></p>
+        </div>
+        <div class="pull-right fnav">
+            <ul class="footer-social">
+                <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                <li><a href=""><i class="fa fa-twitter"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- Javascripts
+================================================== -->
+<script src="https://code.jquery.com/jquery-1.11.1.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        changePageAndSize();
+    });
+
+    function changePageAndSize() {
+        $('#pageSizeSelect').change(function(evt) {
+            window.location.replace("/home/findAll/?pageSize=" + this.value + "&page=1");
+        });
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>
