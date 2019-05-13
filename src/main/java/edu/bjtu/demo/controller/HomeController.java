@@ -104,20 +104,14 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    @RequestMapping("/find/evict")
-    public String evict() {
-        String subject = "football";
-        evictCoach(subject);
-        return "redirect:/home";
-    }
-
     @Cacheable(value = "find", key = "#subject")
     public Page<Coach> cacheCoach(Page<Coach> coachList, String subject){
         return coachList;
     }
 
     @CacheEvict(value = "find", key = "#subject")
-    public String evictCoach(String subject) {
+    @RequestMapping("/find/evict/{subject}")
+    public String evict(@PathVariable String subject) {
         log.info("Evict all coaches of {}", subject);
         return "redirect:/home";
     }
