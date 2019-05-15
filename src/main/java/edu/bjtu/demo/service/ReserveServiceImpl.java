@@ -9,7 +9,7 @@ import com.google.common.util.concurrent.RateLimiter;
 @Service
 public class ReserveServiceImpl implements ReserveService{
     private UserCoachRepository UserCoachRepository;
-    private RateLimiter rateLimiter = RateLimiter.create(1); // rate is "10 permits per second"
+    private RateLimiter rateLimiter = RateLimiter.create(5.0);
 
     @Autowired
     public void setUserCoachRepository(UserCoachRepository UserCoachRepository) {

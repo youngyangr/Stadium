@@ -23,3 +23,9 @@
 - **@EnableCaching** annotation
 - **@Cacheable** annotation
 - **@CacheEvict** annotation
+
+---
+
+- ## Rate limit
+- **Google Guava RateLimiter**
+- **Nginx Rate limit**
