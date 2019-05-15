@@ -93,8 +93,8 @@
     <div class="pager">
         <p></p>
         <select class="input-group-sm form-control pagination">
-            <option value="My">My Coach</option>
-            <option value="All">All Coach</option>
+            <option value="My">all coach</option>
+            <option value="All">my coach</option>
         </select>
         <select class="input-group-sm form-control pagination">
             <option value="all">all subject</option>
@@ -104,7 +104,6 @@
             <option value="wushu">wushu</option>
         </select>
         <input type="submit" value="view" class="btn btn-primary btn-condensed">
-    </div>
 
     <!-- END PAGE TITLE -->
     <div class="row">
@@ -139,28 +138,28 @@
                 <ul class="pagination">
                     <li th:class="${coachList.number == 0} ? disabled"><a
                             class="pageLink"
-                            th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                            th:href="@{/home/(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
                     </li>
                     <li th:class="${coachList.number == 0} ? disabled"><a
                             class="pageLink"
-                            th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${coachList.number})}">&larr;</a>
+                            th:href="@{/home/(pageSize=${selectedPageSize}, page=${coachList.number})}">&larr;</a>
                     </li>
                     <li
                             th:class="${coachList.number == (page - 1)} ? 'active pointer-disabled'"
                             th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
                         <a class="pageLink"
-                           th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${page})}"
+                           th:href="@{/home/(pageSize=${selectedPageSize}, page=${page})}"
                            th:text="${page}"></a>
                     </li>
                     <li
                             th:class="${coachList.number + 1 == coachList.totalPages} ? disabled">
                         <a class="pageLink"
-                           th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${coachList.number + 2})}">&rarr;</a>
+                           th:href="@{/home/(pageSize=${selectedPageSize}, page=${coachList.number + 2})}">&rarr;</a>
                     </li>
                     <li
                             th:class="${coachList.number + 1 == coachList.totalPages} ? disabled">
                         <a class="pageLink"
-                           th:href="@{/home/findAll/(pageSize=${selectedPageSize}, page=${coachList.totalPages})}">&raquo;</a>
+                           th:href="@{/home/(pageSize=${selectedPageSize}, page=${coachList.totalPages})}">&raquo;</a>
                     </li>
                 </ul>
             </div>
@@ -201,7 +200,7 @@
 
     function changePageAndSize() {
         $('#pageSizeSelect').change(function(evt) {
-            window.location.replace("/home/findAll/?pageSize=" + this.value + "&page=1");
+            window.location.replace("/home/?pageSize=" + this.value + "&page=1");
         });
     }
     /*]]>*/

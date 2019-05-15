@@ -19,4 +19,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id,c.name,c.subject) from User as u, Coach as c, UserCoach as uc"
             + " where u.id = uc.userId and c.id = uc.coachId and u.id = ?1")
     Page<Coach> getAllCoaches(Integer id, Pageable pageable);
+
+    @Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id, c.name, c.subject) from User as u, Coach as c, UserCoach as uc"
+            + " where u.id = uc.userId and c.id = uc.coachId and c.subject = ?1 and u.id = ?2")
+    Iterable<Coach> getBySubject(String subject, Integer id);
+
+    @Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id,c.name,c.subject) from User as u, Coach as c, UserCoach as uc"
+            + " where u.id = uc.userId and c.id = uc.coachId and u.id = ?1")
+    Iterable<Coach> getAllCoaches(Integer id);
 }

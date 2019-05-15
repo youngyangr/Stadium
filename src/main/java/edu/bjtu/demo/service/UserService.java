@@ -13,6 +13,8 @@ public interface UserService {
     void deleteUser(Integer id);
     boolean existUser(User user);
     boolean checkUser(User user);
+    Iterable<Coach> getBySubject(Integer id, String subject);
+    Iterable<Coach> getAllCoaches(Integer id);
     Page<Coach> getBySubject(String subject, Integer id, Integer evalPageSize, Integer evalPage);
     Page<Coach> getAllCoaches(Integer id, Integer evalPageSize, Integer evalPage);
 }

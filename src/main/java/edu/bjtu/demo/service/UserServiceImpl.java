@@ -63,6 +63,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Iterable<Coach> getBySubject(Integer id, String subject) {
+        return this.UserRepository.getBySubject(subject, id);
+    }
+
+    @Override
+    public Iterable<Coach> getAllCoaches(Integer id) {
+        return this.UserRepository.getAllCoaches(id);
+    }
+
+    @Override
     public Page<Coach> getBySubject(String subject, Integer id, Integer evalPageSize, Integer evalPage) {
         Sort sort = new Sort(Sort.Direction.ASC, "id");
         Pageable pageable = PageRequest.of(evalPage, evalPageSize, sort);
