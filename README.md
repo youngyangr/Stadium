@@ -29,3 +29,58 @@
 - ## Rate limit
 - **Google Guava RateLimiter**
 - **Nginx Rate limit**
+```
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+#pid        logs/nginx.pid;
+
+events {
+    use epoll;
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+    
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+
+    # 定义了一个 mylimit 缓冲区，请求频率为每秒 1 个请求（nr/s）
+    limit_req_zone $binary_remote_addr zone=mylimit:10m rate=1r/s;
+
+    server {
+    	listen  80;
+        server_name  localhost:8080;
+
+	location = / {
+	    proxy_pass http://localhost:8080;
+	}
+
+	location ^~ /static/ {
+	    root /src/main/resources/static/;
+	}
+
+    	location / {
+		limit_req zone=mylimit burst=3 nodelay;
+		proxy_pass  http://localhost:8080/;  
+    	}
+    }
+
+}
+```
