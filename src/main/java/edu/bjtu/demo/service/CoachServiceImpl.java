@@ -20,6 +20,16 @@ public class CoachServiceImpl implements CoachService{
     }
 
     @Override
+    public Coach saveCoach(Coach coach) {
+        return this.CoachRepository.save(coach);
+    }
+
+    @Override
+    public void deleteCoach(Integer id) {
+        this.CoachRepository.deleteById(id);
+    }
+
+    @Override
     public Iterable<Coach> findAllCoaches() {
         return this.CoachRepository.findAll();
     }

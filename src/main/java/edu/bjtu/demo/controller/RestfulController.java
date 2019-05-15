@@ -1,5 +1,6 @@
 package edu.bjtu.demo.controller;
 
+import edu.bjtu.demo.domain.Coach;
 import edu.bjtu.demo.domain.UserCoach;
 import edu.bjtu.demo.service.CoachService;
 import edu.bjtu.demo.service.ReserveService;
@@ -32,16 +33,21 @@ public class RestfulController {
         this.coachService = coachService;
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST, produces = "application/text")
+    @RequestMapping(value = "/orders/add", method = RequestMethod.POST)
     public Object reserve(@RequestBody UserCoach usercoach) {
         this.reserveService.reserve(usercoach);
-        return new ResponseEntity<>("RESERVED", HttpStatus.CREATED);
+        return new ResponseEntity("RESERVED", HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.DELETE, produces = "application/text")
+    @RequestMapping(value = "/orders/delete", method = RequestMethod.DELETE)
     public Object cancel(@RequestBody UserCoach usercoach) {
         this.reserveService.cancel(usercoach);
-        return new ResponseEntity<>("CANCELED", HttpStatus.OK);
+        return new ResponseEntity("CANCELED", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/orders/list")
+    public Object list() {
+        return new ResponseEntity(this.reserveService.listOrders(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/orders/{id}/{subject}")
@@ -59,9 +65,20 @@ public class RestfulController {
         return new ResponseEntity<>(this.coachService.findCoachBySubject(subject), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/coach")
+    @RequestMapping(value = "/coach/list")
     public ResponseEntity<Object> findAllCoach() {
         return new ResponseEntity<>(this.coachService.findAllCoaches(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/coach/add", method = RequestMethod.POST)
+    public ResponseEntity<Object> addCoach(@RequestBody Coach coach) {
+        this.coachService.saveCoach(coach);
+        return new ResponseEntity("coach saved successfully", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/coach/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteCoach(@PathVariable Integer id) {
+        this.coachService.deleteCoach(id);
+        return new ResponseEntity("coach deleted successfully", HttpStatus.OK);
+    }
 }

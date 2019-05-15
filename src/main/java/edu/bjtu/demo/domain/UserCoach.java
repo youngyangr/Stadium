@@ -11,6 +11,9 @@ public class UserCoach extends Auditable<String>{
     @Id
     private Integer coachId;
 
+    @Version
+    private Integer version;
+
     public Integer getUserId() {
         return userId;
     }
@@ -25,5 +28,13 @@ public class UserCoach extends Auditable<String>{
 
     public void setCoachId(Integer coachId) {
         this.coachId = coachId;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }

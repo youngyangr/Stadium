@@ -6,4 +6,5 @@ import edu.bjtu.demo.domain.UserCoach;
 public interface ReserveService {
     UserCoach reserve(UserCoach usercoach);
     void cancel(UserCoach usercoach);
+    Iterable<UserCoach> listOrders();
 }

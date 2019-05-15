@@ -3,8 +3,6 @@ package edu.bjtu.demo.controller;
 import edu.bjtu.demo.domain.Coach;
 import edu.bjtu.demo.domain.PagerModel;
 import edu.bjtu.demo.service.CoachService;
-import edu.bjtu.demo.service.ReserveService;
-import edu.bjtu.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +67,7 @@ public class HomeController {
         log.info("Evict all coaches");
         return "redirect:/home";
     }
-//
+
 //    @Cacheable(value = "find", key = "#subject")
 //    public Page<Coach> cacheCoach(Page<Coach> coachList, String subject){
 //        return coachList;

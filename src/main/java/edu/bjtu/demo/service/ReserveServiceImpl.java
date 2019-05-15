@@ -24,4 +24,9 @@ public class ReserveServiceImpl implements ReserveService{
         this.UserCoachRepository.delete(usercoach);
     }
 
+    @Override
+    public Iterable<UserCoach> listOrders() {
+        return this.UserCoachRepository.findAll();
+    }
+
 }
