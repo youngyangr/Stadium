@@ -11,7 +11,6 @@ public class UserAuditorAware implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        //TODO: 根据实际情况取真实用户
         return Optional.of("admin");
     }
 }
