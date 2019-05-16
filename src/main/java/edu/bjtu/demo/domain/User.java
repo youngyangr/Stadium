@@ -1,5 +1,7 @@
 package edu.bjtu.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -14,6 +16,7 @@ public class User extends Auditable<String> implements Serializable {
     private String username;
 
     @Size(min = 2, message = "password must be at least 2 characters.")
+    @JsonIgnore
     private String password;
 
     public Integer getId() {

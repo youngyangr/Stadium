@@ -1,6 +1,7 @@
 package edu.bjtu.demo.controller;
 
 import edu.bjtu.demo.domain.Coach;
+import edu.bjtu.demo.domain.User;
 import edu.bjtu.demo.domain.UserCoach;
 import edu.bjtu.demo.service.CoachService;
 import edu.bjtu.demo.service.ReserveService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -80,5 +83,21 @@ public class RestfulController {
     public ResponseEntity<Object> deleteCoach(@PathVariable Integer id) {
         this.coachService.deleteCoach(id);
         return new ResponseEntity("coach deleted successfully", HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/user/list", method = RequestMethod.GET)
+    public Iterable<User> listUser(){
+        return this.userService.getAllUsers();
+    }
+
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    public User create(@RequestBody User user){
+        return this.userService.saveUser(user);
+    }
+
+    @RequestMapping(value = "/user/delete/{id}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable(value = "id") Integer id){
+        this.userService.deleteUser(id);
+        return "success";
     }
 }

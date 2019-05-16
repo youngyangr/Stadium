@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+    User findSingleByUsername(String username);
+
     List<User> findByUsername(String username);
 
     @Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id, c.name, c.subject) from User as u, Coach as c, UserCoach as uc"
