@@ -1,12 +1,14 @@
 package edu.bjtu.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
+@ApiModel("User entity")
 public class User extends Auditable<String> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

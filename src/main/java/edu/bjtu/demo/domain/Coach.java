@@ -1,9 +1,12 @@
 package edu.bjtu.demo.domain;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@ApiModel("Coach entity")
 public class Coach implements Serializable {
 
     public Coach(){

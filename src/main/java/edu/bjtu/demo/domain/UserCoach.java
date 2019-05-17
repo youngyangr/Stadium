@@ -1,8 +1,11 @@
 package edu.bjtu.demo.domain;
 
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.*;
 
 @Entity
+@ApiModel("UserCoach entity")
 @IdClass(UserCoachPK.class)
 public class UserCoach extends Auditable<String>{
     @Id
