@@ -99,5 +99,5 @@ http {
 
 ---
 
-- ## Spring stream + kafka
+- ## Spring stream && kafka
 
