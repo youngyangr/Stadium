@@ -26,7 +26,7 @@
 
 ---
 
-- ## Restful Service && API @Version
+- ## Restful Service && API Version
 - **@Version** annotation
 - **@RestController** annotation
 - **@RequestMapping("/api")** 
