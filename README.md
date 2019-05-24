@@ -92,10 +92,14 @@ http {
 ---
 
 - ## Oauth2 Authentication
+ ![image](https://github.com/youngyangor/assignment/blob/master/image/postman-1.png?raw=true)
+- obtain access token and request again
+ ![image](https://github.com/youngyangor/assignment/blob/master/image/postman-2.png?raw=true)
 
 ---
 
 - ## Online API document (Swagger)
+![image](https://github.com/youngyangor/assignment/blob/master/image/swagger.png?raw=true)
 
 ---
 
