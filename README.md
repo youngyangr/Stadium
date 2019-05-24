@@ -27,6 +27,9 @@
 ---
 
 - ## Restful Service && API @Version
+- **@Version** annotation
+- **@RestController** annotation
+- **@RequestMapping("/api")** 
 
 ---
 
@@ -103,5 +106,5 @@ http {
 
 ---
 
-- ## Spring stream && kafka
+- ## Spring cloud stream && kafka
 
