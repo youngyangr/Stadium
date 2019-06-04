@@ -106,5 +106,35 @@ http {
 
 ---
 
-- ## Spring cloud stream && kafka
+- ## Kafka Configuration
+```
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        orders-in:
+          destination: orders
+          contentType: application/json
+        orders-out:
+          destination: orders
+          contentType: application/json  
+```
 
+---
+
+- ## Spring cloud stream
+```
+public interface OrdersStreams {
+    String INPUT = "orders-in";
+    String OUTPUT = "orders-out";
+
+    @Input(INPUT)
+    SubscribableChannel inboundOrders();
+
+    @Output(OUTPUT)
+    MessageChannel outboundOrders();
+}
+```
