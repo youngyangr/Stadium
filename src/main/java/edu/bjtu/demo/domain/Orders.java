@@ -9,5 +9,6 @@ import lombok.ToString;
 @Getter @Setter @ToString @Builder
 public class Orders {
     private long timestamp;
-    private String message;
+    private UserCoach userCoach;
+    private String method;
 }

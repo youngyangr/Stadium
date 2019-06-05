@@ -19,8 +19,6 @@ public class OrdersService {
     }
 
     public void sendOrder(final Orders orders) {
-        log.info("Sending orders {}", orders);
-
         MessageChannel messageChannel = ordersStreams.outboundOrders();
         messageChannel.send(MessageBuilder
                 .withPayload(orders)
