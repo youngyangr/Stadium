@@ -14,17 +14,8 @@ public class UserCoach extends Auditable<String>{
     @Id
     private Integer coachId;
 
-    private String relation;
-
     @Version
     private Integer version;
-
-    @ManyToOne
-    @JoinColumn(name = "userId",insertable = false, updatable = false)
-    protected User user;
-    @ManyToOne
-    @JoinColumn(name = "coachId",insertable = false, updatable = false)
-    protected Coach  coach;
 
     public UserCoach(){
     }
@@ -53,11 +44,4 @@ public class UserCoach extends Auditable<String>{
         this.version = version;
     }
 
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
-    }
 }
