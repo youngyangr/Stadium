@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@Api(tags = "Restful interface", description = "Provide all restful API")
+@Api(tags = "Restful interface", description = "Provide some restful API")
 public class RestfulController {
 
     private ReserveService reserveService;
