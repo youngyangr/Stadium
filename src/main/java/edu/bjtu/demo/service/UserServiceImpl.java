@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -53,8 +54,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User saveUser(User User) {
-        return this.UserRepository.save(User);
+    public User saveUser(User user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword().trim()));
+        return this.UserRepository.save(user);
     }
 
     @Override
@@ -74,7 +77,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public boolean checkUser(User user){
         if(existUser(user)){
             List<User> list = this.UserRepository.findByUsername(user.getUsername());
-            if(list.get(0).getPassword().equals(user.getPassword())){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encode = list.get(0).getPassword();
+            String password = user.getPassword();
+            if(encoder.matches(password, encode)){
                 return true;
             }
         }
