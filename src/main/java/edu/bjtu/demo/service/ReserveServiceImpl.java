@@ -1,10 +1,13 @@
 package edu.bjtu.demo.service;
 
 import edu.bjtu.demo.domain.UserCoach;
+import edu.bjtu.demo.domain.UserCoachPK;
 import edu.bjtu.demo.repository.UserCoachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.common.util.concurrent.RateLimiter;
+
+import java.util.Optional;
 
 @Service
 public class ReserveServiceImpl implements ReserveService{
@@ -25,7 +28,11 @@ public class ReserveServiceImpl implements ReserveService{
     @Override
     public void cancel(UserCoach usercoach) {
         rateLimiter.acquire();
-        this.UserCoachRepository.delete(usercoach);
+        UserCoachPK pk = new UserCoachPK();
+        pk.setUserId(usercoach.getUserId());
+        pk.setCoachId(usercoach.getCoachId());
+        Optional<UserCoach> delete = this.UserCoachRepository.findById(pk);
+        this.UserCoachRepository.delete(delete.get());
     }
 
     @Override
