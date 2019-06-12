@@ -138,3 +138,7 @@ public interface OrdersStreams {
     MessageChannel outboundOrders();
 }
 ```
+
+---
+
+- ## Spring mvc refactored to Spring WebFlux
