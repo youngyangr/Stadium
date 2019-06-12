@@ -7,9 +7,11 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @EnableCaching
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableReactiveMongoRepositories
 @SpringBootApplication
 public class AssignmentApplication {
 

@@ -3,38 +3,56 @@ package edu.bjtu.demo.controller;
 import edu.bjtu.demo.domain.Orders;
 import edu.bjtu.demo.domain.UserCoach;
 import edu.bjtu.demo.service.OrdersService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import edu.bjtu.demo.service.RecordService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+@Slf4j
 @RestController
+@RequestMapping("/orders")
 public class OrdersController {
+    @Autowired
+    private RecordService recordService;
+
     private final OrdersService OrdersService;
 
     public OrdersController(OrdersService OrdersService) {
         this.OrdersService = OrdersService;
     }
 
-    @RequestMapping(value = "/kafka", method = RequestMethod.POST)
-    public ResponseEntity<Object> reserve(@RequestBody UserCoach usercoach) {
-        return send(usercoach,"add");
-    }
-
-    @RequestMapping(value = "/kafka", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> cancel(@RequestBody UserCoach usercoach) {
-        return send(usercoach,"delete");
-    }
-
-    private ResponseEntity<Object> send(UserCoach usercoach, String method) {
-        UserCoach order = usercoach;
+    @PostMapping
+    public Mono<Orders> create(@RequestBody UserCoach usercoach) {
         Orders orders = Orders.builder()
-                .userCoach(order)
+                .userCoach(usercoach)
                 .timestamp(System.currentTimeMillis())
-                .method(method)
+                .method("add")
+                .delete(false)
                 .build();
-
         OrdersService.sendOrder(orders);
-        return new ResponseEntity("Request send successfully", HttpStatus.OK);
+        log.debug("create Orders with orders : {}", orders);
+        return recordService.createOrders(orders);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Boolean> delete(@RequestBody UserCoach usercoach, @PathVariable String id) {
+        Orders orders = Orders.builder()
+                .userCoach(usercoach)
+                .timestamp(System.currentTimeMillis())
+                .method("delete")
+                .delete(true)
+                .build();
+        OrdersService.sendOrder(orders);
+        log.debug("delete Orders with orders : {}", orders);
+        return recordService.delete(id);
+    }
+
+    @GetMapping
+    public Flux<Orders> findAll() {
+        log.debug("findAll Orders");
+        return recordService.findAll();
     }
 
 }
