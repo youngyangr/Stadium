@@ -15,6 +15,23 @@
 - JPA Pagination
 - JPA Auditing
 - JPA Multi table query
+```
+@Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id, c.name, c.subject) from User as u, Coach as c, UserCoach as uc"
+        + " where u.id = uc.userId and c.id = uc.coachId and c.subject = ?1 and u.id = ?2")
+Page<Coach> getBySubject(String subject, Integer id, Pageable pageable);
+
+@Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id,c.name,c.subject) from User as u, Coach as c, UserCoach as uc"
+        + " where u.id = uc.userId and c.id = uc.coachId and u.id = ?1")
+Page<Coach> getAllCoaches(Integer id, Pageable pageable);
+
+@Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id, c.name, c.subject) from User as u, Coach as c, UserCoach as uc"
+        + " where u.id = uc.userId and c.id = uc.coachId and c.subject = ?1 and u.id = ?2")
+Iterable<Coach> getBySubject(String subject, Integer id);
+
+@Query(value = "SELECT NEW edu.bjtu.demo.domain.Coach(c.id,c.name,c.subject) from User as u, Coach as c, UserCoach as uc"
+        + " where u.id = uc.userId and c.id = uc.coachId and u.id = ?1")
+Iterable<Coach> getAllCoaches(Integer id);
+```
 ![gif](https://github.com/youngyangor/assignment/blob/master/image/query.gif?raw=true)
 
 ---
@@ -23,13 +40,31 @@
 - **@EnableCaching** annotation
 - **@Cacheable** annotation
 - **@CacheEvict** annotation
+```
+@Cacheable(value = "all")
+public Page<Coach> cacheAllCoach(Page<Coach> coachList){
+    return coachList;
+}
+
+@CacheEvict(value = "all")
+@RequestMapping("/evict")
+public String evictAllCoach() {
+    log.info("Evict all coaches");
+    return "redirect:/home";
+}
+```
 
 ---
 
-- ## Restful Service && API Version
+- ## Restful Service & API Version
 - **@Version** annotation
 - **@RestController** annotation
 - **@RequestMapping("/api")** 
+```
+@RestController
+@RequestMapping("/api")
+@Api(tags = "Restful interface", description = "Provide some restful API")
+```
 
 ---
 
@@ -103,6 +138,31 @@ http {
 
 - ## Online API document (Swagger)
 ![image](https://github.com/youngyangor/assignment/blob/master/image/swagger.png?raw=true)
+```
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("edu.bjtu.demo.controller"))
+                .paths(regex("/api.*"))
+                .build()
+                .apiInfo(metaData());
+    }
+    private ApiInfo metaData() {
+        return new ApiInfoBuilder()
+                .title("REST API for Online Store")
+                .description("\"Spring Boot REST API for Online Store\"")
+                .version("1.0.0")
+                .license("Apache License Version 2.0")
+                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
+                .contact(new Contact("API Helper","https://github.com/youngyangor", "16301162@bjtu.edu.cn"))
+                .build();
+    }
+}
+```
 
 ---
 
