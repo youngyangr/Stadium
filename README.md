@@ -11,7 +11,7 @@
 
 ---
 - ## Database Entity–relationship model
-<img src="https://github.com/youngyangor/assignment/blob/master/image/ER.png?raw=true" style="content:80%"/>
+<img src="https://github.com/youngyangor/assignment/blob/master/image/ER.png?raw=true" style="zoom:70%"/>
  
 ---
 
