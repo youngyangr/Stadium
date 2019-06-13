@@ -142,3 +142,39 @@ public interface OrdersStreams {
 ---
 
 - ## Spring mvc refactored to Spring WebFlux
+- **Spring Webflux restful API**
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webflux</artifactId>
+</dependency>
+```
+
+- **Functional request handler**
+```
+@Configuration
+@ComponentScan(basePackages = { "edu.bjtu.demo.controller"})
+public class RoutesConfiguration {
+    @Autowired
+    private OrdersHandler ordersHandler;
+
+    @Bean
+    public RouterFunction<ServerResponse> ordersRoute() {
+        return route(GET("/orders"), ordersHandler::findAll)
+                .andRoute(POST("/orders"), ordersHandler::save)
+                .andRoute(DELETE("/orders/{id}"), ordersHandler::delete);
+    }
+
+}
+```
+
+- **Reactive persisting data **
+```
+public interface OrdersRepository extends ReactiveMongoRepository<Orders, String> {
+    Mono<Orders> findByIdAndDeleteIsFalse(String id);
+}
+```
