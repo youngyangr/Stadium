@@ -214,7 +214,6 @@ public interface OrdersStreams {
 </dependency>
 ```
 
-- **Functional request handler**
 ```
 @Configuration
 @ComponentScan(basePackages = { "edu.bjtu.demo.controller"})
@@ -232,11 +231,28 @@ public class RoutesConfiguration {
 }
 ```
 
+- **Functional request handler**
 ```
-public Mono<ServerResponse> findAll(ServerRequest request) {
-    return ok()
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(recordService.findAll(), Orders.class);
+@Component
+public class OrdersHandler {
+    @Autowired
+    private RecordService recordService;
+
+    private final OrdersService OrdersService;
+
+    public OrdersHandler(OrdersService ordersService) {
+        OrdersService = ordersService;
+    }
+
+    public Mono<ServerResponse> findAll(ServerRequest request) {
+        return ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(recordService.findAll(), Orders.class);
+    }
+
+    public Mono<ServerResponse> save(ServerRequest request) {...}
+
+    public Mono<ServerResponse> delete(ServerRequest request) {...}
 }
 ```
 

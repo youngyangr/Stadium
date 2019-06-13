@@ -33,8 +33,8 @@ public class OrdersHandler {
     public Mono<ServerResponse> save(ServerRequest request) {
         final Mono<UserCoach> usercoach = request.bodyToMono(UserCoach.class);
         UserCoach uc = new UserCoach();
-        uc.setUserId(1);
-        uc.setCoachId(1);
+        uc.setUserId(1);//user id of usercoach
+        uc.setCoachId(1);//coach id of usercoach
         Orders orders = Orders.builder()
                 .userCoach(uc)
                 .timestamp(System.currentTimeMillis())
@@ -50,8 +50,8 @@ public class OrdersHandler {
     public Mono<ServerResponse> delete(ServerRequest request) {
         final Mono<UserCoach> usercoach = request.bodyToMono(UserCoach.class);
         UserCoach uc = new UserCoach();
-        uc.setUserId(1);
-        uc.setCoachId(1);
+        uc.setUserId(1);//user id of usercoach
+        uc.setCoachId(1);//coach id of usercoach
         Orders orders = Orders.builder()
                 .userCoach(uc)
                 .timestamp(System.currentTimeMillis())
