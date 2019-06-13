@@ -172,6 +172,14 @@ public class RoutesConfiguration {
 }
 ```
 
+```
+    public Mono<ServerResponse> findAll(ServerRequest request) {
+        return ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(recordService.findAll(), Orders.class);
+    }
+```
+
 - **Reactive persisting data **
 ```
 public interface OrdersRepository extends ReactiveMongoRepository<Orders, String> {
